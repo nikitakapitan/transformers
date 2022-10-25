@@ -34,7 +34,7 @@ transformers
 ============
 
 
-    Add a short description here!
+    This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
 
 
 A longer description of your project goes here...
