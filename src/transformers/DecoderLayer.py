@@ -5,6 +5,7 @@ DecoderLayer implements 3 parts:
 3. position-wise fully connected feed-forward + normalization + residual connection
 """
 import torch as nn
+from helper import clones
 from LayerNorm import LayerNorm
 from ResidualConnection import ResidualConnection
 from typing import Callable
@@ -17,7 +18,7 @@ class DecoderLayer(nn.Module):
         self.self_attn = self_attn
         self.src_attn = src_attn
         self.feed_fwd = feed_fwd
-        self.resconnect = ResidualConnection(size)
+        self.resconnect = clones(ResidualConnection(size), 2)
         
         
         self.norm = LayerNorm(size)
@@ -26,6 +27,6 @@ class DecoderLayer(nn.Module):
     def forward(self, x, mask):
         self_attn_func = lambda x : self.self_attn(x, x, x, mask)
         
-        x = self.resconnect(x, sublayer=self_attn_func)
-        x = self.resconnect(x, sublayer=self.feed_fwd)
+        x = self.resconnect[0](x, sublayer=self_attn_func)
+        x = self.resconnect[1](x, sublayer=self.feed_fwd)
         return x

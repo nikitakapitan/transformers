@@ -6,6 +6,7 @@ EncoderLayer implements two parts:
 """
 
 import torch.nn  as nn
+from helper import clones
 from ResidualConnection import ResidualConnection
 from typing import Callable
 from LayerNorm import LayerNorm
@@ -16,7 +17,7 @@ class EncoderLayer(nn.Module):
         super().__init__()
         self.self_attn = self_attn
         self.feed_fwd = feed_fwd
-        self.resconnect = ResidualConnection(size)
+        self.resconnect = clones(ResidualConnection(size), 2)
         self.size = size
         
         self.norm = LayerNorm(size)
@@ -25,6 +26,6 @@ class EncoderLayer(nn.Module):
     def forward(self, x, mask):
         self_attn_func = lambda x : self.self_attn(x, x, x, mask)
         
-        x = self.resconnect(x, sublayer=self_attn_func)
-        x = self.resconnect(x, sublayer=self.feed_fwd)
+        x = self.resconnect[0](x, sublayer=self_attn_func)
+        x = self.resconnect[1](x, sublayer=self.feed_fwd)
         return x
