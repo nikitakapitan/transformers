@@ -1,6 +1,10 @@
 """
 The goal of Encoder class is to implement the stack of N layers (EncoderLayer)
+test
 """
+import torch as nn
+from copy import deepcopy
+from LayerNorm import LayerNorm
 
 class Encoder(nn.Module):
 
