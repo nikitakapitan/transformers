@@ -1,18 +1,18 @@
 """
-The goal of Encoder class is to implement the stack of N layers (EncoderLayer)
-test
+Decoder class implements the stack of N layers (DecoderLayer)
 """
+from typing import Callable
 import torch.nn as nn
 from copy import deepcopy
 from LayerNorm import LayerNorm
 
-class Encoder(nn.Module):
+class Decoder(nn.Module):
 
-    def __init__(self, layer, N):
+    def __init__(self, layer : Callable, N):
         self.layers = nn.ModuleList([deepcopy(layer) for _ in range(N)])
         self.norm = LayerNorm(layer.size)
         
-    def forward(self, x, mask):
+    def forward(self, x, memory, src_mask, tgt_mask):
         for layer in self.layers:
-            x = layer(x, mask)
+            x = layer(x, memory, src_mask, tgt_mask)
         return self.norm(x)

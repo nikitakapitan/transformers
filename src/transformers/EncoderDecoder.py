@@ -8,7 +8,7 @@ src_emb - embeddings of source input
 tgt_emb - embeddings of target input
 generator -
 """
-import torch as nn
+import torch.nn  as nn
 
 class EncoderDecoder(nn.Module):
 
