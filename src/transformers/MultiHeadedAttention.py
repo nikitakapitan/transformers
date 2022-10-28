@@ -24,10 +24,10 @@ class MultiHeadedAttention(nn.Module):
             mask = mask.unsqueeze(1)
         n_batches = query.size(0)
 
-        query, key, value = [
-                lin(x).view(n_batches, -1, self.h, self.d_k).transpose(1, 2)
-                for lin, x in zip((self.q_fc, self.k_fc, self.v_fc), (query, key, value))
-            ]
+        query = self.q_fc(query).view(n_batches, -1, self.h, self.d_k).transpose(1, 2)
+        key = self.k_fc(key).view(n_batches, -1, self.h, self.d_k).transpose(1, 2)
+        value = self.v_fc(value).view(n_batches, -1, self.h, self.d_k).transpose(1, 2)
+
         # apply attention on all projected vectors in batch
         x, self.attn = attention(
             query, key, value, mask=mask, dropout=self.dropout)
