@@ -9,6 +9,7 @@ from transformers.LayerNorm import LayerNorm
 class Decoder(nn.Module):
 
     def __init__(self, layer : Callable, N):
+        super().__init__()
         self.layers = nn.ModuleList([deepcopy(layer) for _ in range(N)])
         self.norm = LayerNorm(layer.size)
         

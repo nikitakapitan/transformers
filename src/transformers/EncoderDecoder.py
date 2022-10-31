@@ -13,6 +13,7 @@ import torch.nn  as nn
 class EncoderDecoder(nn.Module):
 
     def __init__(self, encoder, decoder, src_emb, tgt_emb, generator):
+        super().__init__()
         self.encoder = encoder
         self.decoder = decoder
         self.src_emb = src_emb

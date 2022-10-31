@@ -4,12 +4,14 @@ test
 """
 import torch.nn as nn
 from copy import deepcopy
+from transformers.helper import clones
 from transformers.LayerNorm import LayerNorm
 
 class Encoder(nn.Module):
 
     def __init__(self, layer, N):
-        self.layers = nn.ModuleList([deepcopy(layer) for _ in range(N)])
+        super().__init__()
+        self.layers = clones(layer, N)
         self.norm = LayerNorm(layer.size)
         
     def forward(self, x, mask):
