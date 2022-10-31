@@ -4,8 +4,7 @@ DecoderLayer implements 3 parts:
 2. Multi-head self-attention + normalization + residual connection
 3. position-wise fully connected feed-forward + normalization + residual connection
 """
-import torch as nn
-import numpy as np
+import torch.nn as nn
 from transformers.helper import clones
 from transformers.LayerNorm import LayerNorm
 from transformers.ResidualConnection import ResidualConnection

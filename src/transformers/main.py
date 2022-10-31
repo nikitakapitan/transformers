@@ -67,3 +67,6 @@ def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0
             nn.init.xavier_uniform_(p)
 
     return model
+
+if __name__ == "__main__":
+    make_model(11,11,2)
