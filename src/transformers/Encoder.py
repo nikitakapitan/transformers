@@ -4,7 +4,7 @@ test
 """
 import torch.nn as nn
 from copy import deepcopy
-from LayerNorm import LayerNorm
+from transformers.LayerNorm import LayerNorm
 
 class Encoder(nn.Module):
 

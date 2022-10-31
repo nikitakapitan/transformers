@@ -5,8 +5,8 @@ it also normalize the output of sublayer.
 """
 
 import torch.nn as nn
-from LayerNorm import LayerNorm
 from typing import Callable # python explicit typin
+from transformers.LayerNorm import LayerNorm
 
 class ResidualConnection(nn.Module):
 

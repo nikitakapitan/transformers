@@ -6,9 +6,8 @@ DecoderLayer implements 3 parts:
 """
 import torch as nn
 from helper import clones
-from LayerNorm import LayerNorm
-from ResidualConnection import ResidualConnection
-from typing import Callable
+from transformers.LayerNorm import LayerNorm
+from transformers.ResidualConnection import ResidualConnection
 
 class DecoderLayer(nn.Module):
 

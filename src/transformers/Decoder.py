@@ -4,7 +4,7 @@ Decoder class implements the stack of N layers (DecoderLayer)
 from typing import Callable
 import torch.nn as nn
 from copy import deepcopy
-from LayerNorm import LayerNorm
+from transformers.LayerNorm import LayerNorm
 
 class Decoder(nn.Module):
 

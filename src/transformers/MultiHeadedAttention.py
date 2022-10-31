@@ -2,8 +2,8 @@
 from turtle import forward
 from torch import dropout
 import torch.nn as nn
-from helper import clones
-from attention import attention
+from transformers.helper import clones
+from transformers.attention import attention
 
 class MultiHeadedAttention(nn.Module):
 

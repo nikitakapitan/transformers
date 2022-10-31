@@ -6,10 +6,11 @@ EncoderLayer implements two parts:
 """
 
 import torch.nn  as nn
-from helper import clones
-from ResidualConnection import ResidualConnection
 from typing import Callable
-from LayerNorm import LayerNorm
+
+from transformers.helper import clones
+from transformers.ResidualConnection import ResidualConnection
+from transformers.LayerNorm import LayerNorm
 
 class EncoderLayer(nn.Module):
 
