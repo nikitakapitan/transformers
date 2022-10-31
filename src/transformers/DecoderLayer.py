@@ -5,7 +5,7 @@ DecoderLayer implements 3 parts:
 3. position-wise fully connected feed-forward + normalization + residual connection
 """
 import torch as nn
-from helper import clones
+from transformers.helper import clones
 from transformers.LayerNorm import LayerNorm
 from transformers.ResidualConnection import ResidualConnection
 
