@@ -14,4 +14,4 @@ def attention(query, key, value, mask=None, dropout=None):
     if dropout is not None:
         p_attn = dropout(p_attn)
     context = torch.matmul(p_attn, value)
-    return context
+    return context, p_attn
