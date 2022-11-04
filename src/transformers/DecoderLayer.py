@@ -17,15 +17,18 @@ class DecoderLayer(nn.Module):
         self.self_attn = self_attn
         self.src_attn = src_attn
         self.feed_fwd = feed_fwd
-        self.resconnect = clones(ResidualConnection(size), 2)
+        self.resconnect = clones(ResidualConnection(size), 3)
         
         
         self.norm = LayerNorm(size)
         self.droput = nn.Dropout(dropout)
         
-    def forward(self, x, mask):
-        self_attn_func = lambda x : self.self_attn(x, x, x, mask)
+    def forward(self, x, memory, src_mask, tgt_mask):
+        m = memory
+        tgt_self_attn_f = lambda x : self.self_attn(x, tgt_mask)
+        src_self_attn_f = lambda x : self.self_attn(x, tgt_mask)
         
-        x = self.resconnect[0](x, sublayer=self_attn_func)
-        x = self.resconnect[1](x, sublayer=self.feed_fwd)
+        x = self.resconnect[0](x, sublayer=tgt_self_attn_f)
+        x = self.resconnect[1](x, sublayer=src_self_attn_f)
+        x = self.resconnect[2](x, sublayer=self.feed_fwd)
         return x

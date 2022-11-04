@@ -23,7 +23,7 @@ class MultiHeadedAttention(nn.Module):
         if mask is not None:
             # same mask appleid to all h heads
             mask = mask.unsqueeze(1) # *(1, 
-        n_batches = query.size(0)
+        n_batches = input.size(0)
         
         # Compute Query, Key & Value. shape -> (n_batch, n_tokes, d_model)
         query = self.q_fc(input) 
@@ -40,7 +40,7 @@ class MultiHeadedAttention(nn.Module):
             query, key, value, mask=mask, dropout=self.dropout)
 
         # Concat heads into multi-heads
-        context = context.transpose(1, 2).contiguous().view(n_batches, -1, self.h * self.d_k)
+        context = context.transpose(1, 2).contiguous().view(n_batches, -1, self.h * self.d_head)
         del query, key, value
         return self.final_fc(context)
         
