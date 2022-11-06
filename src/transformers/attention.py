@@ -4,10 +4,10 @@ import math
 import torch
 
 
-def attention(query, key, value, mask=None, dropout=None):
+def attention(attn_from, attn_to, value, mask=None, dropout=None):
 
-    d_k = query.size(-1)
-    scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
+    d_k = attn_from.size(-1)
+    scores = torch.matmul(attn_from, attn_to.transpose(-2, -1)) / math.sqrt(d_k)
     if mask is not None:
         scores = scores.masked_fill(mask, -1e9)
     p_attn = scores.softmax(dim=-1)

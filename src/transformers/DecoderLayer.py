@@ -14,9 +14,9 @@ class DecoderLayer(nn.Module):
     def __init__(self, size, self_attn, src_attn, feed_fwd, dropout):
         super().__init__()
         self.size = size
-        self.self_attn = self_attn
-        self.src_attn = src_attn
-        self.feed_fwd = feed_fwd
+        self.self_attn = self_attn # MultiHeadedAttention(h, d_model)
+        self.src_attn = src_attn   # MultiHeadedAttention(h, d_model)
+        self.feed_fwd = feed_fwd # PositionWiseFeedForward(d_model, d_ff)
         self.resconnect = clones(ResidualConnection(size), 3)
         
         
@@ -25,10 +25,12 @@ class DecoderLayer(nn.Module):
         
     def forward(self, x, memory, src_mask, tgt_mask):
         m = memory
-        tgt_self_attn_f = lambda x : self.self_attn(x, tgt_mask)
-        src_self_attn_f = lambda x : self.self_attn(x, tgt_mask)
+        # note                  attention   from  to  value   mask
+        tgt_attn = lambda x : self.self_attn(x,   x,     x, tgt_mask)
+        src_attn = lambda x : self.self_attn(x,   m,     m, src_mask)
         
-        x = self.resconnect[0](x, sublayer=tgt_self_attn_f)
-        x = self.resconnect[1](x, sublayer=src_self_attn_f)
+        x = self.resconnect[0](x, sublayer=tgt_attn)
+        x = self.resconnect[1](x, sublayer=src_attn)
         x = self.resconnect[2](x, sublayer=self.feed_fwd)
+        
         return x

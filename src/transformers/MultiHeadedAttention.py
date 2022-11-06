@@ -18,7 +18,7 @@ class MultiHeadedAttention(nn.Module):
         self.attn = None
         self.dropout = nn.Dropout(p=p_dropout)
 
-    def forward(self, input, mask=None):
+    def forward(self, attn_from, attn_to, value, mask=None):
         "query, key, value : tensor (n_batch, n_tokens, d_model)"
         if mask is not None:
             # same mask appleid to all h heads
@@ -26,9 +26,9 @@ class MultiHeadedAttention(nn.Module):
         n_batches = input.size(0)
         
         # Compute Query, Key & Value. shape -> (n_batch, n_tokes, d_model)
-        query = self.q_fc(input) 
-        key = self.k_fc(input)
-        value = self.v_fc(input)
+        query = self.q_fc(attn_from) 
+        key = self.k_fc(attn_to)
+        value = self.v_fc(value)
 
         # review shape -> (n_batches, n_heads, n_tokens, d_head) 
         query = query.view(n_batches, -1, self.h, self.d_head).transpose(1, 2)
