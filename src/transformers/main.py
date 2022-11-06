@@ -42,15 +42,16 @@ def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0
         ),
         src_emb=nn.Sequential(
             Embeddings(
+                vocab=src_vocab,
                 d_model=d_model,
-                vocab=src_vocab
+                
             ),
             dcopy(position)
         ),
         tgt_emb=nn.Sequential(
             Embeddings(
+                vocab=tgt_vocab,
                 d_model=d_model,
-                vocab=tgt_vocab
             ),
             dcopy(position)
         ),
