@@ -23,7 +23,7 @@ class MultiHeadedAttention(nn.Module):
         if mask is not None:
             # same mask appleid to all h heads
             mask = mask.unsqueeze(1) # *(1, 
-        n_batches = input.size(0)
+        n_batches = value.size(0)
         
         # Compute Query, Key & Value. shape -> (n_batch, n_tokes, d_model)
         query = self.q_fc(attn_from) 
