@@ -36,8 +36,10 @@ transformers
 
     This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
 
+This project replicates the original architecture of Transformers which is basically Encoder-Deconder model with a lot of attentions.
 
-A longer description of your project goes here...
+The aim of the project is to train the model on 30k English-German translation dataset. 
+
 
 
 .. _pyscaffold-notes:
