@@ -40,5 +40,6 @@ def load_vocab(spacy_de, spacy_en):
         torch.save((vocab_src, vocab_tgt), "vocab.pt")
     else:
         vocab_src, vocab_tgt = torch.load("vocab.pt")
-    # print(f"DOne.\nVocab len: SRC={len(vocab_src)} TGT={len(vocab_tgt)}")
+    print("Finished.\nVocabulary sizes:")
+    print(f"len: SRC={len(vocab_src)} TGT={len(vocab_tgt)}")
     return vocab_src, vocab_tgt
