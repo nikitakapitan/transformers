@@ -22,7 +22,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     init TrainState()
     """
 
-    print(f'Train worker process using GPU :{gpu}', flush=True)
+    print(f'Train worker process using GPU n.{gpu}', flush=True)
     torch.cuda.set_device(gpu)
 
     pad_idx = vocab_tgt["<blank>"]
@@ -65,7 +65,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     for epoch in range(config['num_epochs']):
 
         model.train()
-        print(f'[GPU{gpu}] Epoch {epoch} Training ====', flush=True)
+        print(f'[GPU n.{gpu}] Epoch {epoch} Training ====', flush=True)
         _, train_state = run_epoch(
             data_iter=(Batch(src=b[0], tgt=b[1], pad=pad_idx) for b in train_dataloader),
             model=model,
@@ -82,7 +82,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
             torch.save(module.state_dict(), file_path)
         torch.cuda.empty_cache()
 
-        print(f"[GPU{gpu}] Epoch {epoch} Validation ===", flush=True)
+        print(f"[GPU n.{gpu}] Epoch {epoch} Validation ===", flush=True)
         model.eval()
 
         sloss = run_epoch(
