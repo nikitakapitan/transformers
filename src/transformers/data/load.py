@@ -7,7 +7,14 @@ from torchtext.data.functional import to_map_style_dataset
 from torch.utils.data import DataLoader
 
 def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
-                     batch_size=8000, max_padding=128):
+                     batch_size=8000, max_padding=128, is_distributed=False):
+    """
+    load Multi30k DE-ENG dataset
+    convert it from iterable to map
+    prepare DataLoader
+        + apply collate_batch : <s></s> + padding + stack
+    return train_dataloader, valid_dataloader
+    """
 
     def tokenize_de(text):
         return tokenize(text, spacy_de)
@@ -31,10 +38,9 @@ def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
         language_pair=("de", "en")
     )
 
-    # dataset from iterable to map
+    # dataset from iterable to map : allows re-call multiple times dataset.
     train_iter_map = to_map_style_dataset(train_iter)
     train_sampler = None
-    
     valid_iter_map = to_map_style_dataset(valid_iter)
     valid_sampler = None
 
