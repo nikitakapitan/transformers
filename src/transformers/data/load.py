@@ -6,6 +6,8 @@ from torchtext.data.functional import to_map_style_dataset
 
 from torch.utils.data import DataLoader
 
+from torch.utils.data.distributed import DistributedSampler
+
 def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
                      batch_size=2000, max_padding=128, is_distributed=False):
     """
@@ -40,9 +42,9 @@ def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
 
     # dataset from iterable to map : allows re-call multiple times dataset.
     train_iter_map = to_map_style_dataset(train_iter)
-    train_sampler = None
+    train_sampler = DistributedSampler(train_iter_map) if is_distributed else None
     valid_iter_map = to_map_style_dataset(valid_iter)
-    valid_sampler = None
+    valid_sampler = DistributedSampler(valid_iter_map) if is_distributed else None
 
     train_dataloader = DataLoader(
         train_iter_map,

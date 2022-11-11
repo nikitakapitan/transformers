@@ -10,7 +10,11 @@ from transformers.data.Batch import Batch
 from transformers.training.SimpleLossCompute import SimpleLossCompute
 from transformers.helper import DummyOptimizer, DummyScheduler
 
-import GPUtil
+import GPUtil   # print GPU memory info
+
+# Packages for distributed computation
+# import torch.distributed as dist
+# from torch.nn.parallel import DistributedDataParallel as DDP
 
 def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     spacy_de, spacy_en, config, is_distributed=False):
@@ -31,9 +35,14 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     model.cuda(gpu)
     module = model
     is_main_process = True
+    # if is_distributed:
+    #     dist.init_process_group("nccl", init_method="env://", rank=gpu,world_size=ngpus_per_node)
+    #     model = DDP(model, device_ids=[gou])
+    #     module = model.module
+    #     is_main_process = gpu == 0
 
     criterion = LabelSmoothing(size=len(vocab_tgt),
-     padding_idx=pad_idx, smoothing=0.1)
+    padding_idx=pad_idx, smoothing=0.1)
     # criterion = nn.KLDivLoss(reduction="sum")
     criterion.cuda(gpu)
 
@@ -45,7 +54,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
         spacy_en=spacy_en,
         batch_size=config['batch_size'] // ngpus_per_node,
         max_padding=config['max_padding'],
-        is_distributed=False
+        # is_distributed=is_distributed,
     )
 
     optimizer = torch.optim.Adam(
@@ -63,6 +72,9 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     train_state = TrainState()
 
     for epoch in range(config['num_epochs']):
+        # if is_distributed:
+        #     train_dataloader.sampler.set_epoch(epoch)
+        #     valid_dataloader.sampler.set_epoch(epoch)
 
         model.train()
         print(f'[GPU n.{gpu}] Epoch {epoch} Training ====', flush=True)
