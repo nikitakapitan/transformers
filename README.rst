@@ -40,6 +40,8 @@ This project replicates the original architecture of Transformers which is basic
 
 The aim of the project is to train the model on 30k English-German translation dataset. 
 
+You can run ipynb files in notebooks to check the results.
+
 
 
 .. _pyscaffold-notes:
