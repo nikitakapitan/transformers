@@ -32,7 +32,7 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
         print(f"Source text (Input) {src_tokens}")
         print(f"Target Text (Ground Truth) {tgt_tokens}")
 
-        model_out = greedy_decode(model. rb.src, rb.src_mask, 72, 0)[0]
+        model_out = greedy_decode(model, rb.src, rb.src_mask, 72, 0)[0]
         model_txt = ("".join([vocab_tgt.get_itos()[x] for x in model_out if x!= pad_idx])\
             .split(eos_string, 1)[0] + eos_string)
         print(f"Model Output {model_txt}")
