@@ -24,7 +24,7 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
         print(f"\nExample {idx} ======\n")
         b = next(iter(valid_dataloader))
         rb = Batch(src=b[0], tgt=b[1], pad=pad_idx)
-        greedy_decode(model, rb.src, rb.src_mask, 64, 0)[0]
+        # greedy_decode(model, rb.src, rb.src_mask, 64, 0)[0]
 
         src_tokens = [vocab_src.get_itos()[x] for x in rb.src[0] if x!=pad_idx]
         tgt_tokens = [vocab_tgt.get_itos()[x] for x in rb.tgt[0] if x!=pad_idx]
@@ -33,7 +33,7 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
         print(f"Target Text (Ground Truth) {tgt_tokens}")
 
         model_out = greedy_decode(model, rb.src, rb.src_mask, 72, 0)[0]
-        model_txt = ("".join([vocab_tgt.get_itos()[x] for x in model_out if x!= pad_idx])\
+        model_txt = (" ".join([vocab_tgt.get_itos()[x] for x in model_out if x!= pad_idx])\
             .split(eos_string, 1)[0] + eos_string)
         print(f"Model Output {model_txt}")
 

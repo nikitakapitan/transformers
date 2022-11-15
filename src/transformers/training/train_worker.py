@@ -37,7 +37,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     is_main_process = True
     # if is_distributed:
     #     dist.init_process_group("nccl", init_method="env://", rank=gpu,world_size=ngpus_per_node)
-    #     model = DDP(model, device_ids=[gou])
+    #     model = DDP(model, device_ids=[gpu])
     #     module = model.module
     #     is_main_process = gpu == 0
 
