@@ -21,8 +21,12 @@ class EncoderDecoder(nn.Module):
         self.generator = generator
 
     def forward(self, src, tgt, src_mask, tgt_mask):
-        encoding = self.encode(src, src_mask)
-        decoding = self.decode(encoding, src_mask, tgt, tgt_mask)
+        """supposed to be called in __main__
+        src (tensor) : memory
+        tgt (tensor) : self-dynamic output
+        """
+        encoding = self.encode(src, src_mask) # own class method
+        decoding = self.decode(encoding, src_mask, tgt, tgt_mask) # own class method
         return decoding
         
     def encode(self, src, src_mask):

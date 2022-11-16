@@ -28,4 +28,5 @@ def load_trained_model():
         'file_prefix' : 'multi30k_model_',
     }
     model_path = 'multi30k_model_final.pt'
+    
    

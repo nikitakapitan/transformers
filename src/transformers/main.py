@@ -15,7 +15,7 @@ from transformers.DecoderLayer import DecoderLayer
 
 from transformers.Generator import Generator
 
-def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0.1):
+def make_model(src_vocab_len, tgt_vocab_len, N=6, d_model=512, d_ff=2048, h=8, dropout=0.1):
     
     attn = MultiHeadedAttention(h, d_model)
     ff = PositionWiseFeedForward(d_model, d_ff, dropout)
@@ -42,7 +42,7 @@ def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0
         ),
         src_emb=nn.Sequential(
             Embeddings(
-                vocab=src_vocab,
+                vocab_len=src_vocab_len,
                 d_model=d_model,
                 
             ),
@@ -50,14 +50,14 @@ def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0
         ),
         tgt_emb=nn.Sequential(
             Embeddings(
-                vocab=tgt_vocab,
+                vocab_len=tgt_vocab_len,
                 d_model=d_model,
             ),
             dcopy(position)
         ),
         generator=Generator(
             d_model=d_model,
-            vocab=tgt_vocab
+            vocab_len=tgt_vocab_len
         )
 
     )

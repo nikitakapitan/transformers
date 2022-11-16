@@ -19,28 +19,45 @@ class MultiHeadedAttention(nn.Module):
         self.dropout = nn.Dropout(p=p_dropout)
 
     def forward(self, attn_from, attn_to, value, mask=None):
-        "query, key, value : tensor (n_batch, n_tokens, d_model)"
+        """ 
+        Attention is applied within last dimension slice by slice. 
+        attn_from, attn_to, value might have any arbitrary dimension.
+
+        In decoder case, attn_from dimension is dynamic (from 1 to N)
+        
+        If different dimensions : q_fc, k_fc, v_fc are responsible to convert arbitrary input to fixed dimension.
+
+        query :  (n_batch, n_tokens_from, d_model)
+        key :  (n_batch, n_tokens_to, d_model)
+        value :  (n_batch, n_tokens_value, d_model)
+        """
+
         if mask is not None:
             # same mask appleid to all h heads
             mask = mask.unsqueeze(1) # *(1, 
         n_batches = value.size(0)
+
+        n_tokens_from = attn_from.size(1)
+        n_tokens_to = attn_to.size(1)
+        n_tokens_value = value.size(1)
         
         # Compute Query, Key & Value. shape -> (n_batch, n_tokes, d_model)
         query = self.q_fc(attn_from) 
         key = self.k_fc(attn_to)
         value = self.v_fc(value)
 
-        # review shape -> (n_batches, n_heads, n_tokens, d_head) 
-        query = query.view(n_batches, -1, self.h, self.d_head).transpose(1, 2)
-        key = key.view(n_batches, -1, self.h, self.d_head).transpose(1, 2)
-        value = value.view(n_batches, -1, self.h, self.d_head).transpose(1, 2)
+        # Split to H heads
+        # |view| -> (n_batches, n_tokens, self.h, self.d_head)
+        # |transpose| -> (n_batches, n_heads, n_tokens, d_head) 
+        query = query.view(n_batches, n_tokens_from, self.h, self.d_head).transpose(1, 2)
+        key = key.view(n_batches, n_tokens_to, self.h, self.d_head).transpose(1, 2)
+        value = value.view(n_batches, n_tokens_value, self.h, self.d_head).transpose(1, 2)
 
-        # apply attention on all projected vectors in batch
-        context, self.attn = attention(
-            query, key, value, mask=mask, dropout=self.dropout)
+        # attention : context -> (n_batches, n_heads, n_tokens_from, d_h)
+        context, self.attn = attention(query, key, value, mask=mask, dropout=self.dropout)
 
-        # Concat heads into multi-heads
-        context = context.transpose(1, 2).contiguous().view(n_batches, -1, self.h * self.d_head)
+        # Collapse heads. transpose -> (n_batches, n_tokens_from, n_heads, d_h). view -> (n_batches, n_tokens_from, d_model)
+        context = context.transpose(1, 2).contiguous().view(n_batches, n_tokens_from, self.h * self.d_head)
         del query, key, value
         return self.final_fc(context)
         

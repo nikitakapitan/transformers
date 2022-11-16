@@ -7,15 +7,16 @@ from transformers.helper import following_mask
 def greedy_decode(model, src, src_mask, max_len, start_symbol):
     memory = model.encode(src, src_mask)
     tgt = torch.zeros(1, 1).fill_(start_symbol).type_as(src.data)
-    for i in range(max_len - 1):
-        out = model.decode(
-            memory, src_mask, tgt, following_mask(tgt.size(1)).type_as(src.data)
-        )
+
+    for i in range(max_len - 1): # loop over output words (decoded)
+        tgt_mask = following_mask(tgt.size(1)).type_as(src.data)
+        out = model.decode(memory, src_mask, tgt, tgt_mask)
+
         prob = model.generator(out[:, -1])
-        _, next_word = torch.max(prob, dim=1)
-        next_word = next_word.data[0]
-        tgt = torch.cat([tgt, torch.zeros(1, 1).type_as(src.data).fill_(next_word)], dim=1)
-        return tgt
+        next_word = torch.argmax(prob, dim=1).unsqueeze(0)
+        tgt=torch.cat([tgt, next_word],dim=1)
+
+    return tgt
 
 def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
                 n_examples=15, pad_idx=2, eos_string="</s>"):
@@ -38,7 +39,7 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
         print(f"Model Output {model_txt}")
 
         results[idx] = (rb, src_tokens, tgt_tokens, model_out, model_txt)
-        return results
+    return results
 
 
 def run_model_example(vocab_src, vocab_tgt, spacy_de, spacy_en, n_examples=5):

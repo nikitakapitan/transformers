@@ -1,3 +1,4 @@
+# called by transforers.train.py
 import torch
 import torch.nn as nn
 from transformers.main import make_model
@@ -30,8 +31,15 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     torch.cuda.set_device(gpu)
 
     pad_idx = vocab_tgt["<blank>"]
-    d_model = 512
-    model = make_model(len(vocab_src), len(vocab_tgt), N=6)
+    model = make_model(
+        src_vocab_len = len(vocab_src), 
+        tgt_vocab_len = len(vocab_tgt), 
+        N=6,
+        d_model=config['d_model'],
+        d_ff = config['d_ff'],
+        h = config['h'],
+        dropout=config['p_dropout'])
+
     model.cuda(gpu)
     module = model
     is_main_process = True

@@ -25,7 +25,7 @@ class EncoderLayer(nn.Module):
         self.droput = nn.Dropout(dropout)
         
     def forward(self, x, mask):
-        attn = lambda x : self.self_attn(x, x, x, mask=mask)
+        attn = lambda x : self.self_attn(attn_from=x, attn_to=x, value=x, mask=mask)
         
         x = self.resconnect[0](x, sublayer=attn)
         x = self.resconnect[1](x, sublayer=self.feed_fwd)
