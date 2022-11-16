@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from transformers.main import make_model
 from transformers.training.LabelSmoothing import LabelSmoothing
-from transformers.data.load import create_dataloaders
+from transformers.data.dataloader import create_dataloaders
 from transformers.training.lr import rate
 from transformers.training.TrainState import TrainState
 from transformers.training.run_epoch import run_epoch

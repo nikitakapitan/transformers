@@ -1,4 +1,4 @@
-from transformers.data.load import create_dataloaders
+from transformers.data.dataloader import create_dataloaders
 import torch
 from transformers.main import make_model
 from transformers.data.Batch import Batch
