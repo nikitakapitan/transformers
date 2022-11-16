@@ -18,10 +18,14 @@ import GPUtil   # print GPU memory info
 # from torch.nn.parallel import DistributedDataParallel as DDP
 
 def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
-    spacy_de, spacy_en, config, is_distributed=False):
+    spacy_de, spacy_en, config, architecture, is_distributed=False):
     """
-    define train criterion
-    import data loaders (train, valid)
+    config : dict with training configurations
+    architecture : dict with model configurations
+
+    1. make_model
+    2. define criterion
+    3. load data loaders: train & valid
     define optimizer
     define lr_scheduler
     init TrainState()
@@ -32,13 +36,13 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
 
     pad_idx = vocab_tgt["<blank>"]
     model = make_model(
-        src_vocab_len = len(vocab_src), 
-        tgt_vocab_len = len(vocab_tgt), 
+        src_vocab_len = architecture['src_vocab_len'], 
+        tgt_vocab_len = architecture['tgt_vocab_len'], 
         N=6,
-        d_model=config['d_model'],
-        d_ff = config['d_ff'],
-        h = config['h'],
-        dropout=config['p_dropout'])
+        d_model=architecture['d_model'], 
+        d_ff = architecture['d_ff'],
+        h = architecture['h'],
+        dropout=architecture['p_dropout'])
 
     model.cuda(gpu)
     module = model
@@ -74,7 +78,7 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
     lr_scheduler = torch.optim.lr_scheduler.LambdaLR(
         optimizer=optimizer,
         lr_lambda=lambda step: rate(
-            step=step, model_size=d_model, factor=1, warmup=config['warmup']
+            step=step, model_size=architecture['d_model'], factor=1, warmup=config['warmup']
         )
     )
     train_state = TrainState()
