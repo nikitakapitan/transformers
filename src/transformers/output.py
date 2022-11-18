@@ -42,7 +42,7 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
     return results
 
 
-def run_model_example(vocab_src, vocab_tgt, spacy_de, spacy_en, n_examples=5):
+def run_model_example(vocab_src, vocab_tgt, spacy_de, spacy_en, architecture, n_examples=5):
 
     print('Preparing Data...')
     _, valid_dataloader = create_dataloaders(
