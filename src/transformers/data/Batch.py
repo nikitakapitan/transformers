@@ -31,7 +31,7 @@ def collate_batch(batch, src_pipeline, tgt_pipeline, src_vocab,
     """
     Given a batch of (src, tgt):
     1. wrap src and tgt with <s> & </s>
-    2. add padding with value=pad_id 
+    2. add padding with value=pad_id -> size = max_padding (ex. 128)
     3. stack, creating new dimension
 
     batch : 

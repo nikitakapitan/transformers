@@ -18,11 +18,11 @@ class EncoderLayer(nn.Module):
         super().__init__()
         self.self_attn = self_attn # MultiHeadedAttention
         self.feed_fwd = feed_fwd
-        self.resconnect = clones(ResidualConnection(size), 2)
+        self.resconnect = clones(ResidualConnection(size, dropout), 2)
         self.size = size
         
-        self.norm = LayerNorm(size)
-        self.droput = nn.Dropout(dropout)
+        # self.norm = LayerNorm(size)
+        self.dropout = nn.Dropout(dropout)
         
     def forward(self, x, mask):
         attn = lambda x : self.self_attn(attn_from=x, attn_to=x, value=x, mask=mask)

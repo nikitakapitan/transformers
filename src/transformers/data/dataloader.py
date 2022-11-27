@@ -14,8 +14,8 @@ def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
     load Multi30k DE-ENG dataset
     convert it from iterable to map
     prepare DataLoader
-        + apply collate_batch : <s></s> + padding + stack
-    return train_dataloader, valid_dataloader
+        + apply collate_batch : <s></s> + padding-> (ex.128) + stack
+    return train_dataloader, valid_dataloader : torch..DataLoader
     """
 
     def tokenize_de(text):
@@ -40,7 +40,7 @@ def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
         language_pair=("de", "en")
     )
 
-    # dataset from iterable to map : allows re-call multiple times dataset.
+    # dataset from iterable to map. Why? To allows re-call multiple times dataset.
     train_iter_map = to_map_style_dataset(train_iter)
     train_sampler = DistributedSampler(train_iter_map) if is_distributed else None
     valid_iter_map = to_map_style_dataset(valid_iter)

@@ -17,7 +17,7 @@ class DecoderLayer(nn.Module):
         self.self_attn = self_attn # MultiHeadedAttention(h, d_model)
         self.src_attn = src_attn   # MultiHeadedAttention(h, d_model)
         self.feed_fwd = feed_fwd # PositionWiseFeedForward(d_model, d_ff)
-        self.resconnect = clones(ResidualConnection(size), 3)
+        self.resconnect = clones(ResidualConnection(size, dropout), 3)
         
         
         self.norm = LayerNorm(size)
