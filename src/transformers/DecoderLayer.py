@@ -18,10 +18,7 @@ class DecoderLayer(nn.Module):
         self.src_attn = src_attn   # MultiHeadedAttention(h, d_model)
         self.feed_fwd = feed_fwd # PositionWiseFeedForward(d_model, d_ff)
         self.resconnect = clones(ResidualConnection(size, dropout), 3)
-        
-        
-        self.norm = LayerNorm(size)
-        self.droput = nn.Dropout(dropout)
+        # note : LayerNorm and DropOut are applied within 'resconnect'
         
     def forward(self, x, memory, src_mask, tgt_mask):
         m = memory

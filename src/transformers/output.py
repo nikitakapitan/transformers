@@ -15,7 +15,7 @@ def greedy_decode(model, src, src_mask, max_len, start_symbol):
         prob = model.generator(out[:, -1])
         next_word = torch.argmax(prob, dim=1).unsqueeze(0)
         tgt=torch.cat([tgt, next_word],dim=1)
-
+    print(f'DEBUG greedy_decode tgt={tgt}')
     return tgt
 
 def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
@@ -29,6 +29,9 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
 
         src_tokens = [vocab_src.get_itos()[x] for x in rb.src[0] if x!=pad_idx]
         tgt_tokens = [vocab_tgt.get_itos()[x] for x in rb.tgt[0] if x!=pad_idx]
+        
+        src_tokens = " ".join(src_tokens).replace("\n", "")
+        tgt_tokens = " ".join(tgt_tokens).replace("\n", "")
 
         print(f"Source text (Input) {src_tokens}")
         print(f"Target Text (Ground Truth) {tgt_tokens}")

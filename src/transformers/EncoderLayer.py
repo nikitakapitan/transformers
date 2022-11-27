@@ -20,9 +20,8 @@ class EncoderLayer(nn.Module):
         self.feed_fwd = feed_fwd
         self.resconnect = clones(ResidualConnection(size, dropout), 2)
         self.size = size
-        
-        # self.norm = LayerNorm(size)
-        self.dropout = nn.Dropout(dropout)
+        # note : LayerNorm and DropOut are applied within 'resconnect'
+
         
     def forward(self, x, mask):
         attn = lambda x : self.self_attn(attn_from=x, attn_to=x, value=x, mask=mask)
