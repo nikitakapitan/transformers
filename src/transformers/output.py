@@ -15,11 +15,11 @@ def greedy_decode(model, src, src_mask, max_len, start_symbol):
         prob = model.generator(out[:, -1])
         next_word = torch.argmax(prob, dim=1).unsqueeze(0)
         tgt=torch.cat([tgt, next_word],dim=1)
-    print(f'DEBUG greedy_decode tgt={tgt}')
     return tgt
 
 def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
                 n_examples=15, pad_idx=2, eos_string="</s>"):
+                
     results = [()] * n_examples
     for idx in range(n_examples):
         print(f"\nExample {idx} ======\n")
