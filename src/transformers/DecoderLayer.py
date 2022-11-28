@@ -23,7 +23,7 @@ class DecoderLayer(nn.Module):
     def forward(self, x, memory, src_mask, tgt_mask):
         m = memory
         tgt_attn = lambda x : self.self_attn(attn_from=x, attn_to=x, value=x, mask=tgt_mask)
-        src_attn = lambda x : self.self_attn(attn_from=x, attn_to=m, value=m, mask=src_mask)
+        src_attn = lambda x : self.src_attn(attn_from=x, attn_to=m, value=m, mask=src_mask)
         
         x = self.resconnect[0](x, sublayer=tgt_attn)
         x = self.resconnect[1](x, sublayer=src_attn)

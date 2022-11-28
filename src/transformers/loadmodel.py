@@ -3,7 +3,8 @@ import torch
 from transformers.training.train import train_model
 from transformers.main import make_model
 
-def load_trained_model():
+def load_trained_model(src_vocab_len, tgt_vocab_len):
+    
     config = {
         'batch_size' : 32,
         'distributed' : False,
@@ -15,8 +16,8 @@ def load_trained_model():
         'file_prefix' : 'multi30k_model_',
     }
     architecture = {
-        'src_vocab_len' : 1,
-        'tgt_vocab_len' : 1,
+        'src_vocab_len' : src_vocab_len,
+        'tgt_vocab_len' : tgt_vocab_len,
         'N' : 6, # loop
         'd_model' : 512, # emb
         'd_ff' : 2048,
