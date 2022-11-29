@@ -13,7 +13,7 @@ def load_tokenizers():
     try:
         spacy_en = spacy.load("en_core_web_sm")
     except IOError:
-        os.system("python -m spacy download en_core_wen_sm")
+        os.system("python -m spacy download en_core_web_sm")
         spacy_en = spacy.load("en_core_web_sm")
 
     return spacy_de, spacy_en
