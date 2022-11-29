@@ -20,5 +20,5 @@ class PositionalEncoding(nn.Module):
         self.register_buffer("pe", pe) # not learnable parameter
 
     def forward(self, x):
-        x = x + self.pe[:,x.size(1), :].requires_grad_(False)
+        x = x + self.pe[:, : x.size(1)].requires_grad_(False)
         return self.dropout(x)
