@@ -47,20 +47,43 @@ def check_outputs(valid_dataloader, model, vocab_src, vocab_tgt,
 
 def run_model_example(vocab_src, vocab_tgt, spacy_de, spacy_en, architecture, n_examples=5):
 
+    
+    data_setup = {
+    'max_padding' : 128,
+    }
+
+    architecture = {
+            'src_vocab_len' : len(vocab_src),
+            'tgt_vocab_len' : len(vocab_tgt),
+            'N' : 6, # loop
+            'd_model' : 512, # emb
+            'd_ff' : 2048,
+            'h' : 8,
+            'dropout' : 0.1
+        }
+
     print('Preparing Data...')
     _, valid_dataloader = create_dataloaders(
-        device=torch.device("cpu"),
-        vocab_src=vocab_src,
-        vocab_tgt=vocab_tgt,
-        spacy_de=spacy_de,
-        spacy_en=spacy_en,
-        batch_size=1,
-        is_distributed=False,
+    torch.device("cpu"),
+    vocab_src,
+    vocab_tgt,
+    spacy_de,
+    spacy_en,
+    batch_size=1,
+    is_distributed=False,
     )
 
-    print("Loading Trained Model...")
-
-    model = make_model(len(vocab_src), len(vocab_tgt), N=6)
+    print('Loading Trained model...')
+    model = make_model(
+    src_vocab_len=architecture['src_vocab_len'],
+    tgt_vocab_len=architecture['tgt_vocab_len'],
+    N=architecture['N'],
+    d_model=architecture['d_model'],
+    d_ff=architecture['d_ff'],
+    h=architecture['h'],
+    dropout=architecture['dropout'],
+    )
+    
     model.load_state_dict(
         torch.load("multi30k_model_final.pt", map_location=torch.device("cpu"))
     )

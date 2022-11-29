@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 
 def create_dataloaders(device, vocab_src, vocab_tgt, spacy_de, spacy_en,
-                     batch_size=2000, max_padding=128, is_distributed=False):
+                     batch_size=12000, max_padding=128, is_distributed=False):
     """
     load Multi30k DE-ENG dataset
     convert it from iterable to map

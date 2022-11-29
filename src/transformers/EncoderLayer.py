@@ -14,10 +14,10 @@ from transformers.LayerNorm import LayerNorm
 
 class EncoderLayer(nn.Module):
 
-    def __init__(self, size, self_attn : Callable, feed_fwd, dropout):
+    def __init__(self, size, self_attn : Callable, feed_forward, dropout):
         super().__init__()
         self.self_attn = self_attn # MultiHeadedAttention
-        self.feed_fwd = feed_fwd
+        self.feed_fwd = feed_forward
         self.resconnect = clones(ResidualConnection(size, dropout), 2)
         self.size = size
         # note : LayerNorm and DropOut are applied within 'resconnect'

@@ -11,12 +11,12 @@ from transformers.ResidualConnection import ResidualConnection
 
 class DecoderLayer(nn.Module):
 
-    def __init__(self, size, self_attn, src_attn, feed_fwd, dropout):
+    def __init__(self, size, self_attn, src_attn, feed_forward, dropout):
         super().__init__()
         self.size = size
         self.self_attn = self_attn # MultiHeadedAttention(h, d_model)
         self.src_attn = src_attn   # MultiHeadedAttention(h, d_model)
-        self.feed_fwd = feed_fwd # PositionWiseFeedForward(d_model, d_ff)
+        self.feed_fwd = feed_forward # PositionWiseFeedForward(d_model, d_ff)
         self.resconnect = clones(ResidualConnection(size, dropout), 3)
         # note : LayerNorm and DropOut are applied within 'resconnect'
         

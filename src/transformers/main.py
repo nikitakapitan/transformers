@@ -25,7 +25,7 @@ def make_model(src_vocab_len, tgt_vocab_len, N=6, d_model=512, d_ff=2048, h=8, d
             layer=EncoderLayer(
                 size=d_model,
                 self_attn=dcopy(attn),
-                feed_fwd=dcopy(ff),
+                feed_forward=dcopy(ff),
                 dropout=dropout
             ),
             N=N #6
@@ -35,7 +35,7 @@ def make_model(src_vocab_len, tgt_vocab_len, N=6, d_model=512, d_ff=2048, h=8, d
                 size=d_model,
                 self_attn=dcopy(attn),
                 src_attn=dcopy(attn),
-                feed_fwd=dcopy(ff),
+                feed_forward=dcopy(ff),
                 dropout=dropout
             ),
             N=N #6
