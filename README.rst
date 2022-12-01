@@ -30,13 +30,15 @@
 |
 
 ============
-transformers
+Transformers
 ============
 
 
     This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
 
 This project replicates the original architecture of Transformers which is basically Encoder-Deconder model with a lot of attentions.
+
+<img src="/img/Architecture.jpg" alt="Alt text" title="Optional title">
 
 The aim of the project is to train the model on 30k English-German translation dataset. 
 
