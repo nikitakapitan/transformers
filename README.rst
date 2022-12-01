@@ -42,8 +42,8 @@ Results
    :widths: 25 25 50
    :header-rows: 1
 
-   * - Source text 
-     - Target Text (Ground truth)
+   * - Source text - German
+     - Ground truth - English
      - Model Output
    * - Drei Männer auf Pferden während eines Rennens 
      - Three men on horses during a race
@@ -51,6 +51,12 @@ Results
    * - Ein Kind in einem orangen Shirt springt von Heuballen herunter , während andere Kinder zusehen
      - A child in an orange shirt jumps off bales of hay while other children watch
      - A child in an orange shirt is jumping down a dirty street while other children watch him
+   * - Zwei Männer in Shorts arbeiten an einem blauen Fahrrad 
+     - Two men wearing shorts are working on a blue bike
+     - Two men in shorts are working on a blue bicycle 
+   * - Kinder einer Schulklasse sprechen miteinander und lernen
+     - Kids conversing and learning in class
+     - A group of kids are having a conversation and making a conversation 
 
 Architecture
 ------------
@@ -63,7 +69,7 @@ This project replicates the original architecture of Transformers which is basic
 Data
 ----
 
-The model is trained on '30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
+The model is trained on 30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
 
 =====
 Reproduce the results
@@ -71,20 +77,26 @@ Reproduce the results
 
 1. Get model weights
 -----
+The pre-trained weights are stored on my Drive. You can use the link below to add the shortcut
+
 - Add shortcut to Google drive: https://drive.google.com/file/d/1fQLCFoj2-RmS1M-LzyaSlUYVOS8LSrE1/view?usp=sharing
 
 
 2. Load IPython
 -----
+Prepare a colab session
+
 - Go to https://colab.research.google.com/ 
 - select 'GitHub' and past https://github.com/nikitakapitan/transformers
 - choose [DEMO]Predict.ipynb
 
 3. Run the notebook
 ----
+Simply execute the cells. It will:
+
 - install and import required packages
 - mount your Google Drive and copy **model weights** to colab session
-- **check_outputs** function print the results
+- **check_outputs** function prints the results from the table above.
 
 Note: you won't see the exact same sentences due to random batch. But the quality of translation will remain the same.
 
