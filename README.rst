@@ -38,7 +38,7 @@ Transformers
 
 This project replicates the original architecture of Transformers which is basically Encoder-Deconder model with a lot of attentions.
 
-<img src="/img/Architecture.jpg" alt="Alt text" title="Optional title">
+.. image:: /img/Architecture.jpg
 
 The aim of the project is to train the model on 30k English-German translation dataset. 
 
