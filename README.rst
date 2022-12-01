@@ -96,6 +96,7 @@ Simply execute the cells. It will:
 
 - install and import required packages
 - mount your Google Drive and copy **model weights** to colab session
+ - at this point you should have **multi30k_model_final.pt** file in your Google Drive from step 1.
 - **check_outputs** function prints the results from the table above.
 
 Note: you won't see the exact same sentences due to random batch. But the quality of translation will remain the same.
