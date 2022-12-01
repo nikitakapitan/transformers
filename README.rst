@@ -32,24 +32,62 @@
 ============
 Transformers
 ============
+This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
+    
+Use-case example is German-to-English machine translation.
 
+Results
+-------
+.. list-table:: 
+   :widths: 25 25 50
+   :header-rows: 1
 
-    This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
+   * - Source text 
+     - Target Text (Ground truth)
+     - Model Output
+   * - Drei Männer auf Pferden während eines Rennens 
+     - Three men on horses during a race
+     - Three men on horseback during a race
+   * - Ein Kind in einem orangen Shirt springt von Heuballen herunter , während andere Kinder zusehen
+     - A child in an orange shirt jumps off bales of hay while other children watch
+     - A child in an orange shirt is jumping down a dirty street while other children watch him
 
+Architecture
+------------
 This project replicates the original architecture of Transformers which is basically Encoder-Deconder model with a lot of attentions.
 
-.. image:: img/Architecture.jpg
+   
+.. image:: https://machinelearningmastery.com/wp-content/uploads/2021/08/attention_research_1.png
+    :width: 300
 
-The aim of the project is to train the model on 30k English-German translation dataset. 
+Data
+----
 
-You can run ipynb files in notebooks to check the results.
+The model is trained on '30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
+
+=====
+Reproduce the results
+=====
+
+1. Get model weights
+-----
+- Add shortcut to Google drive: https://drive.google.com/file/d/1fQLCFoj2-RmS1M-LzyaSlUYVOS8LSrE1/view?usp=sharing
+
+
+2. Load IPython
+-----
+- Go to https://colab.research.google.com/ 
+- select 'GitHub' and past https://github.com/nikitakapitan/transformers
+- choose [DEMO]Predict.ipynb
+
+3. Run the notebook
+----
+- install and import required packages
+- mount your Google Drive and copy **model weights** to colab session
+- **check_outputs** function print the results
+
+Note: you won't see the exact same sentences due to random batch. But the quality of translation will remain the same.
 
 
 
-.. _pyscaffold-notes:
 
-Note
-====
-
-This project has been set up using PyScaffold 4.3.1. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
