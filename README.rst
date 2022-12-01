@@ -77,7 +77,7 @@ Reproduce the results
 
 1. Get model weights
 -----
-The pre-trained weights are stored on my Drive. You can use the link below to add the shortcut
+The pre-trained weights are stored on my Drive. You can use the link below to add the shortcut (no need to download)
 
 - Add shortcut to Google drive: https://drive.google.com/file/d/1fQLCFoj2-RmS1M-LzyaSlUYVOS8LSrE1/view?usp=sharing
 
