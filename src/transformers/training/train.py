@@ -9,7 +9,7 @@ def train_model(vocab_src, vocab_tgt, spacy_de, spacy_en, config, architecture):
     config : dict 
     architecture : dict
     """
-    train_worker(
+    return train_worker(
         gpu=0,
         ngpus_per_node=1,
         vocab_src=vocab_src,

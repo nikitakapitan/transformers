@@ -119,7 +119,9 @@ def train_worker(gpu, ngpus_per_node, vocab_src, vocab_tgt,
         )
         print(sloss)
         torch.cuda.empty_cache()
-    
+
     if is_main_process:
         file_path = f"{config['file_prefix']}final.pt"
         torch.save(module.state_dict(), file_path)
+        
+    return model

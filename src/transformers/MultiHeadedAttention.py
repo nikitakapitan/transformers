@@ -13,8 +13,7 @@ class MultiHeadedAttention(nn.Module):
         # we assume d_v always equals d_k
         self.d_head = d_model // h
         self.h = h
-        self.q_fc, self.k_fc, self.v_fc = clones(nn.Linear(d_model, d_model), 3)
-        self.final_fc = nn.Linear(d_model, d_model)
+        self.q_fc, self.k_fc, self.v_fc, self.final_fc = clones(nn.Linear(d_model, d_model), 4)
         self.attn = None
         self.dropout = nn.Dropout(p=p_dropout)
 
@@ -41,13 +40,14 @@ class MultiHeadedAttention(nn.Module):
         n_tokens_to = attn_to.size(1)
         n_tokens_value = value.size(1)
         
-        # Compute Query, Key & Value. shape -> (n_batch, n_tokes, d_model)
+        # Compute Query, Key & Value. shape -> (n_batches, n_tokes, d_model)
         query = self.q_fc(attn_from) 
         key = self.k_fc(attn_to)
         value = self.v_fc(value)
 
-        # Split to H heads
-        # |view| -> (n_batches, n_tokens, self.h, self.d_head)
+        # Split to H heads : d_model = n_heads * d_head
+        # |input| : (n_batches, n_tokens, d_model)
+        # |view| -> (n_batches, n_tokens, n_heads, d_head)
         # |transpose| -> (n_batches, n_heads, n_tokens, d_head) 
         query = query.view(n_batches, n_tokens_from, self.h, self.d_head).transpose(1, 2)
         key = key.view(n_batches, n_tokens_to, self.h, self.d_head).transpose(1, 2)
