@@ -89,7 +89,16 @@ This project replicates the original architecture of Transformers which is basic
 Reproduce the results
 =====
 
-1. Train your own model from scratch.
+To reproduce the results you will need no more than execute the cells in google colab 🤗
+
+Basically, we will need only NumPy, PyTorch and some side libs, no more.
+
+- We will not import any models  : instead we will build the Transformer from scratch using torch.
+- We will not import any weights : instead we will train the model from scratch on row data.
+
+So, let's rock and roll:
+
+1. Build and rain the model from scratch.
 -----
 - Go to https://colab.research.google.com/ 
 - select 'GitHub' and past https://github.com/nikitakapitan/transformers
@@ -97,11 +106,13 @@ Reproduce the results
 
 By executing all cells you will connect to your google drive (a place where the model weights will be saved).
 
-Then you will eventually launch the training (about 15 minutes on colab's GPU).
+First, you will build the model using **make_model** function and settings dictionary **achitecture**
 
-The final model weights are stored in **multi30k_model_final.pt** file.
+Then you will eventually launch the training on GER-ENG pairs dataset (about 15 minutes on colab's GPU).
 
-The last command (!cp multi30...) will copy the weigts from colab VM to your Google Drive.
+The final model weights will be stored in **multi30k_model_final.pt** file.
+
+The last command (!cp multi30...) will copy the weigts from current colab session to your Google Drive.
 
 Now you have trained weights on you Google Drive 🤗
 
@@ -111,17 +122,19 @@ Now you have trained weights on you Google Drive 🤗
 
 - Go to https://colab.research.google.com/ 
 - select 'GitHub' and past https://github.com/nikitakapitan/transformers
-- choose [DEMO]Predict.ipynb
+- choose [DEMO]Translate.ipynb
 
-By executing all cells you will connect to your google drive (a place where the model will search for its weights **multi30k_model_final.pt**)
-
-Then you will create a validation data set containing GER-ENG pairs unseen my the model during training.
-
-Then you will eventually launch the prediction (i.e. translation).
-
-
+By executing all cells you will connect to your google drive (a place where the model will search for weights **multi30k_model_final.pt**)
+​
+134
 Note: Due to random batch, you won't see the exact same sentences as above, but the quality should remain the same.
+Then please define your own phrase inside **YOUR_GERMAN_SENTENCE**
+
+Finally, you will see the English translation as the output. 
 
 
+Note : 
+----
+If you don't want to input your own german phrase, during step 2 select [DEMO]Predict.ipynb.
 
-
+This will translate some samples from validation dataset (unseen during the training).
