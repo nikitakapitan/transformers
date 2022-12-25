@@ -133,6 +133,6 @@ Finally, you will see the English translation as the output.
 
 Note : 
 ----
-If you don't want to input your own german phrase, during step 2 select [DEMO]Predict.ipynb.
+If you are too lazy to create your own german phrase, you can use some samples from validation dataset.
 
-This will translate some samples from validation dataset (unseen during the training).
+To do this, during step 2 select [DEMO]Predict.ipynb and run it.
