@@ -33,8 +33,14 @@
 Transformers
 ============
 This is my replication from scratch of the article Attentino is all you need: https://arxiv.org/abs/1706.03762
-    
+
+
+
+Data 
+----
 Use-case example is German-to-English machine translation.
+The model is trained on 30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
+
 
 Results
 -------
@@ -66,40 +72,44 @@ This project replicates the original architecture of Transformers which is basic
 .. image:: https://machinelearningmastery.com/wp-content/uploads/2021/08/attention_research_1.png
     :width: 300
 
-Data
-----
 
-The model is trained on 30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
 
 =====
 Reproduce the results
 =====
 
-1. Get model weights
+1. Train your own model from scratch.
 -----
-The pre-trained weights are stored on my Drive. You can use the link below to add the shortcut (no need to download)
+- Go to https://colab.research.google.com/ 
+- select 'GitHub' and past https://github.com/nikitakapitan/transformers
+- choose [DEMO]Train.ipynb
 
-- Add shortcut to Google drive: https://drive.google.com/file/d/1fQLCFoj2-RmS1M-LzyaSlUYVOS8LSrE1/view?usp=sharing
+By executing all cells you will connect to your google drive (a place where the model weights will be saved).
+
+Then you will eventually launch the training (about 15 minutes on colab's GPU).
+
+The final model weights are stored in **multi30k_model_final.pt** file.
+
+The last command (!cp multi30...) will copy the weigts from colab VM to your Google Drive.
+
+Now you have trained weights on you Google Drive 🤗
 
 
-2. Load IPython
+2. Laucn translation on validation dataset.
 -----
-Prepare a colab session
 
 - Go to https://colab.research.google.com/ 
 - select 'GitHub' and past https://github.com/nikitakapitan/transformers
 - choose [DEMO]Predict.ipynb
 
-3. Run the notebook
-----
-Simply execute the cells. It will:
+By executing all cells you will connect to your google drive (a place where the model will search for its weights **multi30k_model_final.pt**)
 
-- install and import required packages
-- mount your Google Drive and copy **model weights** to colab session
- - at this point you should have **multi30k_model_final.pt** file in your Google Drive from step 1.
-- **check_outputs** function prints the results from the table above.
+Then you will create a validation data set containing GER-ENG pairs unseen my the model during training.
 
-Note: you won't see the exact same sentences due to random batch. But the quality of translation will remain the same.
+Then you will eventually launch the prediction (i.e. translation).
+
+
+Note: Due to random batch, you won't see the exact same sentences as above, but the quality should remain the same.
 
 
 
