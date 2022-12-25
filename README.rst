@@ -40,7 +40,7 @@ Data
 ----
 Use-case example is German-to-English machine translation.
 
-The model is trained on 30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
+The model is trained on 30k English-German translation pairs: https://pytorch.org/text/stable/datasets.html#multi30k 
 
 
 Results
