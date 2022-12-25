@@ -98,7 +98,7 @@ Basically, we will need only NumPy, PyTorch and some side libs, no more.
 
 So, let's rock and roll:
 
-1. Build and rain the model from scratch.
+1. Build and train the model from scratch.
 -----
 - Go to https://colab.research.google.com/ 
 - select 'GitHub' and past https://github.com/nikitakapitan/transformers
