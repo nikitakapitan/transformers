@@ -74,6 +74,16 @@ This project replicates the original architecture of Transformers which is basic
     :width: 300
 
 
+.. architecture:: = {
+        'src_vocab_len' : 8315, # GERMAN vocab size
+        'tgt_vocab_len' : 6384, # ENGLISH vocab size
+        'N' : 6,                # nb of loops in Transformer
+        'd_model' : 512,        # Model size aka Input size aka Embedding size
+        'd_ff' : 2048,          # nb of neurons in Linear layer
+        'h' : 8,                # nb of attention heads
+        'p_dropout' : 0.1       # dropout probability (for training)
+    }
+
 
 =====
 Reproduce the results
