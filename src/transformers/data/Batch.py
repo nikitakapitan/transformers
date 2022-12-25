@@ -87,6 +87,6 @@ def collate_batch(batch, src_pipeline, tgt_pipeline, src_vocab,
         )
 
         # concat creating new dimension
-        src = torch.stack(src_list)
-        tgt = torch.stack(tgt_list)
-        return (src, tgt)
+    src = torch.stack(src_list)
+    tgt = torch.stack(tgt_list)
+    return (src, tgt)
