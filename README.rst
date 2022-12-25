@@ -39,6 +39,7 @@ This is my replication from scratch of the article Attentino is all you need: ht
 Data 
 ----
 Use-case example is German-to-English machine translation.
+
 The model is trained on 30k English-German translation dataset: https://pytorch.org/text/stable/datasets.html#multi30k 
 
 
