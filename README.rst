@@ -106,7 +106,7 @@ So, let's rock and roll:
 
 By executing all cells you will connect to your google drive (a place where the model weights will be saved).
 
-First, you will build the model using **make_model** function and settings dictionary **achitecture**
+First, you will build the model using **make_model** function, where you can customize the model using **architecture** dict.
 
 Then you will eventually launch the training on GER-ENG pairs dataset (about 15 minutes on colab's GPU).
 
@@ -117,7 +117,7 @@ The last command (!cp multi30...) will copy the weigts from current colab sessio
 Now you have trained weights on you Google Drive 🤗
 
 
-2. Laucn translation on validation dataset.
+2. Translate your own German sentence!
 -----
 
 - Go to https://colab.research.google.com/ 
