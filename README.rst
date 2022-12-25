@@ -125,9 +125,7 @@ Now you have trained weights on you Google Drive 🤗
 - choose [DEMO]Translate.ipynb
 
 By executing all cells you will connect to your google drive (a place where the model will search for weights **multi30k_model_final.pt**)
-​
-134
-Note: Due to random batch, you won't see the exact same sentences as above, but the quality should remain the same.
+
 Then please define your own phrase inside **YOUR_GERMAN_SENTENCE**
 
 Finally, you will see the English translation as the output. 
